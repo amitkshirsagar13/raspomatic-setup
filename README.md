@@ -11,3 +11,9 @@ sudo vi /etc/fstab
 /dev/sda1	/media/entertainment	vfat	rw,defaults	0	0
 /dev/sdb1	/media/data	vfat	rw,defaults	0	0
 ```
+
+### Run Plex:
+
+```
+docker run -d --restart=always --name plex -v /media/entertainment:/media --net=host -v /media/entertainment/plexmediaserver/Library:/root/Library jaymoulin/rpi-plex
+```
