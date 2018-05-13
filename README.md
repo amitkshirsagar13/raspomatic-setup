@@ -15,5 +15,6 @@ sudo vi /etc/fstab
 ### Run Plex:
 
 ```
-docker run -d --restart=always --name plex -v /media/entertainment:/media --net=host -v /media/entertainment/plexmediaserver/Library:/root/Library jaymoulin/rpi-plex
+docker run -d --restart=always --name plex -v /media/entertainment:/media --net=host -v /media/entertainment/plexmediaserver/Library:/root/Library jaymoulin/plex
+
 ```
