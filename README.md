@@ -18,6 +18,8 @@ sudo vi /etc/fstab
 docker run -d --restart=always --name plex -v /media/entertainment:/media/pi/entertainment --net=host -v /media/entertainment/plexmediaserver/Library:/root/Library jaymoulin/plex
 
 ```
+Issue with adding TV Show can be solved by advanced options option dropdown MovieDatabase.
+
 
 ### Setup DNSMASQ
 
