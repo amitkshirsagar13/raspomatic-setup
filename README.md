@@ -1,4 +1,17 @@
 # respomatic-setup
+Setup wifi network setup:
+
+```
+
+sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+network={
+    ssid="amogh"
+    psk="poomit123"
+    key_mgmt=WPA-PSK
+}
+```
+
 
 ### Mount Disk Drives:
 
