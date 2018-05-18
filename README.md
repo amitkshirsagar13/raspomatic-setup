@@ -6,7 +6,7 @@ sudo vi /etc/dhcpcd.conf
 interface wlan0
 static ip_address=192.168.1.111/24
 static routers=192.168.1.1
-static domain_name_servers=192.168.1.1
+static domain_name_servers=192.168.1.111 8.8.8.8
 
 
 sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
