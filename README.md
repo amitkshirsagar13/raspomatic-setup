@@ -2,6 +2,12 @@
 Setup wifi network setup:
 
 ```
+sudo vi /etc/dhcpcd.conf
+interface wlan0
+static ip_address=192.168.1.111/24
+static routers=192.168.1.1
+static domain_name_servers=192.168.1.1
+
 
 sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
