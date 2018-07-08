@@ -2,6 +2,8 @@
 Setup wifi network setup:
 
 ```
+sudo apt-get install dnsutils
+
 sudo vi /etc/dhcpcd.conf
 interface wlan0
 static ip_address=192.168.1.111/24
@@ -34,6 +36,13 @@ UUID=XXXXX	/media/data	ntfs-3g	rw,defaults	0	0
 ### Run Plex:
 
 ```
+wget -O - https://dev2day.de/pms/dev2day-pms.gpg.key | sudo apt-key add -
+echo "deb https://dev2day.de/pms/ stretch main" | sudo tee /etc/apt/sources.list.d/pms.list
+sudo apt-get update -Y
+sudo apt-get install -t stretch plexmediaserver-installer -Y
+
+
+
 docker run -d --restart=always --name plex -v /media/entertainment:/media/pi/entertainment --net=host -v /media/entertainment/plexmediaserver/Library:/root/Library jaymoulin/plex
 
 ```
