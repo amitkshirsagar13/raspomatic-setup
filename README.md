@@ -42,6 +42,16 @@ sudo apt-get update -Y
 sudo apt-get install -t stretch plexmediaserver-installer -Y
 
 
+sudo service plexmediaserver stop
+sudo vi /etc/default/plexmediaserver.prev
+PLEX_MEDIA_SERVER_USER=pi
+
+pi@k8m:/var/lib/plexmediaserver $ sudo chown -h pi:pi Library
+pi@k8m:/media/pi $ sudo chown pi:pi pi && sudo chmod 777 pi
+sudo service plexmediaserver start
+
+
+
 
 docker run -d --restart=always --name plex -v /media/entertainment:/media/pi/entertainment --net=host -v /media/entertainment/plexmediaserver/Library:/root/Library jaymoulin/plex
 
