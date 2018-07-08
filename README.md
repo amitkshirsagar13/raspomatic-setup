@@ -20,11 +20,16 @@ network={
 }
 ```
 
+### Setup ssh login
+```
+ssh-keygen -t rsa
+ssh-copy-id pi@192.168.1.111
+```
+
 
 ### Mount Disk Drives:
 
 ```
-
 sudo blkid
 sudo apt-get install ntfs-3g
 sudo vi /etc/fstab
