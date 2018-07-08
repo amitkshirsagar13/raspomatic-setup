@@ -16,7 +16,7 @@ echo File processing started at `date +"%Y-%m-%d %T"` >> $logfile;
 if [ -f $downloadFile ]
 then
 	touch $lockFile;
-	~/.bin/youtube-dl -f bestaudio -c -a $downloadFile --restrict-filenames -o '/home/poomit/Music/Downloaded/%(title)s.%(ext)s' >> $logfile;
+	~/.bin/youtube-dl -f bestaudio -c -a $downloadFile --restrict-filenames -o '/media/pi/Entertainment/Songs/Download/audio/%(title)s.%(ext)s' >> $logfile;
 	rm $downloadFile;
 	rm $lockFile;
 	mv $downloadFileTmp $downloadFile;
