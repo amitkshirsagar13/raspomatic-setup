@@ -58,6 +58,13 @@ docker run -d --restart=always --name plex -v /media/entertainment:/media/pi/ent
 ```
 Issue with adding TV Show can be solved by advanced options option dropdown MovieDatabase.
 
+### Setup Cockpit and NGINX
+```
+echo 'deb http://deb.debian.org/debian stretch-backports main' | sudo tee /etc/apt/sources.list.d/backports.list
+sudo apt-get update && sudo apt-get install cockpit cockpit-packagekit cockpit-docker cockpit-machines
+sudo systemctl restart cockpit
+
+```
 
 ### Setup DNSMASQ
 
