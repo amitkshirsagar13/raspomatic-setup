@@ -1,0 +1,19 @@
+#!/bin/sh
+
+status=$1;
+script=`sqlplus / as sysdba <<EOF
+$status;
+EXIT;
+EOF`
+if [ $status = "startup" ];
+then
+	lsnrctl start;
+elif [ $status = "shutdown" ];
+then
+	lsnrctl stop;
+else
+	echo "Failed , Please provide arguments as startup or shutdown"
+fi
+
+echo $script;
+

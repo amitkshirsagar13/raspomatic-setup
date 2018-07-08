@@ -58,11 +58,104 @@ docker run -d --restart=always --name plex -v /media/entertainment:/media/pi/ent
 ```
 Issue with adding TV Show can be solved by advanced options option dropdown MovieDatabase.
 
-### Setup Cockpit and NGINX
+### Setup Cockpit, Samba and NGINX
 ```
 echo 'deb http://deb.debian.org/debian stretch-backports main' | sudo tee /etc/apt/sources.list.d/backports.list
-sudo apt-get update && sudo apt-get install cockpit cockpit-packagekit cockpit-docker cockpit-machines
+sudo apt-get update && sudo apt-get install cockpit cockpit-packagekit cockpit-docker cockpit-machines nginx samba samba-common-bin
 sudo systemctl restart cockpit
+sudo systemctl restart nginx
+
+
+pi@k8m:~ $ cat /etc/nginx/nginx.conf
+        ##
+        # SSL Settings
+        ##
+
+        #ssl on;
+        #ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
+        #ssl_prefer_server_ciphers on;
+        ssl_certificate /etc/pki/nginx/server.crt;
+        ssl_certificate_key /etc/pki/nginx/private/server.key;
+
+
+pi@k8m:~ $ cat /etc/nginx/k8m/k8m.conf
+map $http_upgrade $connection_upgrade {
+        default upgrade;
+        '' close;
+}
+
+server {
+   listen         80;
+   return 301 https://$host$request_uri;
+}
+
+upstream websocket {
+        server localhost:9090;
+}
+
+server {
+   listen       80 http2;
+   server_name  api.k8m.k8cluster.io;
+   location / {
+     proxy_pass http://localhost:8443/;
+     proxy_set_header Host $host;
+     proxy_set_header X-Real-IP $remote_addr;
+     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header X-Forwarded-Proto $scheme;
+   }
+}
+
+server {
+   listen       443 ssl http2;
+   server_name  api.k8m.k8cluster.io;
+   location / {
+     proxy_pass https://localhost:6443/;
+     proxy_set_header Host $host;
+     proxy_set_header X-Real-IP $remote_addr;
+     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header X-Forwarded-Proto $scheme;
+   }
+}
+
+server {
+   listen       443 ssl http2;
+   server_name  cockpit.k8m.k8cluster.io;
+   #return 301 $scheme://$server_name:9090$request_uri;
+   location / {
+		proxy_pass http://websocket;
+                proxy_http_version 1.1;
+                proxy_buffering off;
+                proxy_set_header X-Real-IP  $remote_addr;
+                proxy_set_header Host $host;
+                proxy_set_header X-Forwarded-For $remote_addr;
+
+                # needed for websocket
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection $connection_upgrade;
+                # change scheme of "Origin" to http
+                proxy_set_header Origin http://$host;
+
+                gzip off;
+                add_header X-Frame-Options "SAMEORIGIN";
+   }
+}
+
+server {
+   listen       443 ssl http2 default_server;
+   server_name  *.k8m.k8cluster.io;
+   root         /usr/share/nginx/html;
+   index index.html index.htm;
+   ssl_certificate "/etc/pki/nginx/server.crt";
+   ssl_certificate_key "/etc/pki/nginx/private/server.key";
+   location / {
+     proxy_pass https://localhost:30443/;
+     proxy_set_header Host $host;
+     proxy_set_header X-Real-IP $remote_addr;
+     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header X-Forwarded-Proto $scheme;
+   }
+}
+
 
 ```
 

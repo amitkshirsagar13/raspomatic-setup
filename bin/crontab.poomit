@@ -1,0 +1,2 @@
+*/15 * * * * /home/poomit/.bin/downloadVideoSongs.sh &
+*/15 * * * * /home/poomit/.bin/downloadAudioSongs.sh &
