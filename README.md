@@ -201,8 +201,8 @@ address=/k8n1.k8cluster.io/192.168.1.123
 
 
 # All clients using dnsmasq server
-poomit@k8n1:/media/pi $ sudo vi /etc/resolv.conf
+poomit@k8n1:/media/pi $ sudo vi /etc/resolvconf/resolv.conf.d/head 
 nameserver 192.168.1.111
 nameserver 8.8.8.8
-
+nameserver 8.8.4.4
 ```
