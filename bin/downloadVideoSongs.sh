@@ -31,8 +31,5 @@ else
         echo "No file $downloadFile for Processing" >> $logfile
 fi
 echo File processing completed at `date +"%Y-%m-%d %T"` >> $logfile;
-echo -e '\a';
-echo -e '\a';
-echo -e '\a';
 echo "================================================================================================" >> $logfile;
 
