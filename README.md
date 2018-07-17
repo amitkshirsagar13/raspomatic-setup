@@ -160,7 +160,18 @@ server {
      proxy_set_header X-Forwarded-Proto $scheme;
    }
 }
+```
 
+Install fstab on client for samba:
+
+```
+poomit@k8n1:~$ sudo vi /etc/fstab
+//192.168.1.111/entertainment /media/poomit/entertainment1 cifs credentials=/home/poomit/.smbc  redentials,uid=poomit,gid=poomit 0 0
+
+poomit@k8n1:~$ cat .smbcredentials 
+username=pi
+password=Amogh123
+domain=k8cluster.io
 
 ```
 
