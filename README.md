@@ -217,3 +217,11 @@ nameserver 192.168.1.111
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 ```
+
+
+### Install youtube-dl
+
+```
+sudo apt  install ffmpeg
+
+```
