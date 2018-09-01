@@ -67,8 +67,8 @@ Issue with adding TV Show can be solved by advanced options option dropdown Movi
 ```
 echo 'deb http://deb.debian.org/debian stretch-backports main' | sudo tee /etc/apt/sources.list.d/backports.list
 sudo apt-get update && sudo apt-get install cockpit cockpit-packagekit cockpit-docker cockpit-machines nginx samba samba-common-bin
-sudo systemctl restart cockpit
-sudo systemctl restart nginx
+sudo systemctl enable --now cockpit
+sudo systemctl enable --now nginx
 
 
 pi@k8m:~ $ cat /etc/nginx/nginx.conf
