@@ -33,8 +33,7 @@ ssh-copy-id pi@192.168.1.111
 sudo blkid
 sudo apt-get install ntfs-3g
 sudo vi /etc/fstab
-
-UUID=XXXXX	/media/entertainment	ntfs-3g	rw,defaults	0	0
+UUID=FAA49AFFA49ABD97   /media/entertainment    ntfs-3g nofail,auto,rw,defaults 0       0
 UUID=XXXXX	/media/data	ntfs-3g	rw,defaults	0	0
 ```
 
