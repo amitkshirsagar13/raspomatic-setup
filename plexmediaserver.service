@@ -1,19 +1,23 @@
-pi@k8m:/usr/lib/systemd/user $ cat plexmediaserver.service
+pi@k8m $ vi /lib/systemd/system/plexmediaserver.service
 [Unit]
 Description=Plex Media Server for Linux
+After=network-online.target
 
 [Service]
-Environment=PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=%h/.plex
+Environment="PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=/var/lib/plexmediaserver/Library/Application Support"
 Environment=PLEX_MEDIA_SERVER_HOME=/usr/lib/plexmediaserver
 Environment=PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
 Environment=PLEX_MEDIA_SERVER_TMPDIR=/tmp
 ExecStartPre=/bin/sh -c '/usr/bin/test -d "${PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR}" || /bin/mkdir -p "${PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR}"'
 ExecStart=/bin/sh -c 'LD_LIBRARY_PATH=/usr/lib/plexmediaserver "/usr/lib/plexmediaserver/Plex Media Server"'
 Type=simple
+User=pi
+Group=pi
 Restart=on-failure
 RestartSec=5
 StartLimitInterval=60s
 StartLimitBurst=3
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
+~
