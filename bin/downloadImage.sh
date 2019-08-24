@@ -6,14 +6,18 @@ url="$2XINDEX.jpg"
 start=$3
 end=$4
 logStorage=${logUrl##*/}
-if [ ! -d "$storage" ]; then
+if [ ! -d "$storage/$logStorage" ]; then
     echo "Creating $storage"
-    mkdir $storage
+    mkdir -p $storage/$logStorage
+else
+    logStorage=$logStorage`date +%m%d%H%M`
+    echo "Creating $storage"
+    mkdir -p $storage/$logStorage
 fi
 
 while [ $start -lt $end ]
 do
     downloadUrl="${url//XINDEX/$start}"
-    wget $downloadUrl -P $storage/$logStorage >> $storage/0.$logStorage.log
+    wget –-quiet $downloadUrl -P $storage/$logStorage >> $storage/0.$logStorage.log
     true $(( start++ ))
 done
