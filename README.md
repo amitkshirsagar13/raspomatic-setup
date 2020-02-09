@@ -33,8 +33,7 @@ ssh-copy-id pi@192.168.1.111
 sudo blkid
 sudo apt-get install ntfs-3g
 sudo vi /etc/fstab
-
-UUID=XXXXX	/media/entertainment	ntfs-3g	rw,defaults	0	0
+UUID=FAA49AFFA49ABD97   /media/entertainment    ntfs-3g nofail,auto,rw,defaults 0       0
 UUID=XXXXX	/media/data	ntfs-3g	rw,defaults	0	0
 ```
 
@@ -67,8 +66,8 @@ Issue with adding TV Show can be solved by advanced options option dropdown Movi
 ```
 echo 'deb http://deb.debian.org/debian stretch-backports main' | sudo tee /etc/apt/sources.list.d/backports.list
 sudo apt-get update && sudo apt-get install cockpit cockpit-packagekit cockpit-docker cockpit-machines nginx samba samba-common-bin
-sudo systemctl restart cockpit
-sudo systemctl restart nginx
+sudo systemctl enable --now cockpit
+sudo systemctl enable --now nginx
 
 
 pi@k8m:~ $ cat /etc/nginx/nginx.conf
@@ -160,7 +159,18 @@ server {
      proxy_set_header X-Forwarded-Proto $scheme;
    }
 }
+```
 
+Install fstab on client for samba:
+
+```
+poomit@k8n1:~$ sudo vi /etc/fstab
+//192.168.1.111/entertainment /media/poomit/entertainment1 cifs credentials=/home/poomit/.smbc  redentials,uid=poomit,gid=poomit 0 0
+
+poomit@k8n1:~$ cat .smbcredentials 
+username=pi
+password=Amogh123
+domain=k8cluster.io
 
 ```
 
